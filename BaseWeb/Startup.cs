@@ -1,5 +1,4 @@
 ﻿using Domain.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 

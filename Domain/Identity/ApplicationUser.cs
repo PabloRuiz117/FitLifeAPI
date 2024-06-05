@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Identity
 {
@@ -7,5 +8,6 @@ namespace Domain.Identity
         public DateTime RowVersion { get; set; }
         public string AppUser { get; set; }
         public bool IsDeleted { get; set; }
+        public Person Person { get; set; }
     }
 }
