@@ -26,6 +26,8 @@ namespace BaseWeb.Controllers.Identity
                     var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                     if (!result.Succeeded) return BadRequest();
+
+                    return Ok(user);
                 }
                 return BadRequest("El usuario se encuentra eliminado.");
             }
