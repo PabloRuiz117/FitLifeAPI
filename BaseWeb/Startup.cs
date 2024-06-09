@@ -1,6 +1,8 @@
 ﻿using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
+using Services.IServices.Identity;
+using Services.Services.Identity;
 
 namespace BaseWeb
 {
@@ -23,9 +25,9 @@ namespace BaseWeb
                 options.UseSqlServer(Configuration.GetConnectionString(ConnectionString));
             });
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddTransient<ApplicationDbSeeder>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient<IRoleService, RoleService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IServiceCollection services)

@@ -20,7 +20,7 @@ namespace Common.Enums
             MONDAY,
             [Display(Name = "Martes")]
             TUESDAY,
-            [Display(Name = "Miercoles")]
+            [Display(Name = "Miércoles")]
             WEDNESDAY,
             [Display(Name = "Jueves")]
             THURSDAY,
@@ -28,6 +28,16 @@ namespace Common.Enums
             FRIDAY,
             [Display(Name = "Sabado")]
             SATURDAY,
+        }
+
+        public enum TypeMessage
+        {
+            [Display(Name = "Éxito")]
+            SUCCESS,
+            [Display(Name = "Advertencia")]
+            WARNING,
+            [Display(Name = "Ha ocurrido un error")]
+            ERROR,
         }
     }
 }
