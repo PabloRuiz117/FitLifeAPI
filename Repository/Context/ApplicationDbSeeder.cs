@@ -39,7 +39,7 @@ namespace Repository.Context
                         return;
                     }
 
-                    string[] roleNames = { "Administrador", "Root" };
+                    string[] roleNames = { "Administrador", "Root","User" };
                     IdentityResult roleResult;
                     ApplicationRole aspNetRole = null;
 

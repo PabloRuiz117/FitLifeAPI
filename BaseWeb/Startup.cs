@@ -28,6 +28,9 @@ namespace BaseWeb
             services.AddTransient<ApplicationDbSeeder>();
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IServiceCollection services)

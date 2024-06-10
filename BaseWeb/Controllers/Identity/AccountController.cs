@@ -1,7 +1,9 @@
 ﻿using Domain.Identity;
+using Domain.Identity.DTOS;
 using Domain.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.IServices.Identity;
 
 namespace BaseWeb.Controllers.Identity
 {
@@ -9,9 +11,12 @@ namespace BaseWeb.Controllers.Identity
     [ApiController]
     public class AccountController(
         SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager
+        UserManager<ApplicationUser> userManager,
+        IApplicationUserService applicationUserService
         ) : ControllerBase
     {
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
@@ -33,6 +38,23 @@ namespace BaseWeb.Controllers.Identity
             }
 
             return BadRequest("El email o contraseña no es valido.");
+        }
+
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUser([FromBody] ApplicationUserDTO applicationUserDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = await applicationUserService.AddApplicationUserAsync(applicationUserDTO);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
         }
     }
 }
