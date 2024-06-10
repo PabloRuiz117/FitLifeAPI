@@ -40,8 +40,8 @@ namespace BaseWeb.Controllers.Identity
             return BadRequest("El email o contraseña no es valido.");
         }
 
-        [HttpPost("AddUser")]
-        public async Task<IActionResult> AddUser([FromBody] ApplicationUserDTO applicationUserDTO)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] ApplicationUserDTO applicationUserDTO)
         {
             if (!ModelState.IsValid)
             {
