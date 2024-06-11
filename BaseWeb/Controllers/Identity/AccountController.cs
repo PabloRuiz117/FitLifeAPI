@@ -3,6 +3,7 @@ using Domain.Identity.DTOS;
 using Domain.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.IServices;
 using Services.IServices.Identity;
 
 namespace BaseWeb.Controllers.Identity
@@ -12,7 +13,8 @@ namespace BaseWeb.Controllers.Identity
     public class AccountController(
         SignInManager<ApplicationUser> signInManager,
         UserManager<ApplicationUser> userManager,
-        IApplicationUserService applicationUserService
+        IApplicationUserService applicationUserService,
+        IJWTService jWTService
         ) : ControllerBase
     {
 
@@ -32,7 +34,9 @@ namespace BaseWeb.Controllers.Identity
 
                     if (!result.Succeeded) return BadRequest();
 
-                    return Ok(user);
+                    string jwtToken = jWTService.GenerateToken(user);
+
+                    return Ok(new { token = jwtToken});
                 }
                 return BadRequest("El usuario se encuentra eliminado.");
             }
@@ -56,5 +60,6 @@ namespace BaseWeb.Controllers.Identity
 
             return BadRequest(response);
         }
+
     }
 }

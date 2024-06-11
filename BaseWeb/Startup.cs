@@ -1,7 +1,9 @@
 ﻿using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
+using Services.IServices;
 using Services.IServices.Identity;
+using Services.Services;
 using Services.Services.Identity;
 
 namespace BaseWeb
@@ -29,6 +31,7 @@ namespace BaseWeb
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<IJWTService, JWTService>();
 
 
         }
