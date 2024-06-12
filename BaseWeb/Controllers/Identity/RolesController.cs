@@ -11,15 +11,14 @@ namespace BaseWeb.Controllers.Identity
     [Route("api/roles")]
     [ApiController]
     public class RolesController(
-        RoleManager<ApplicationRole> roleManager,
-        UserManager<ApplicationUser> userManager,
+ 
         IRoleService roleService
         
         ) :ControllerBase
     {
         private readonly IRoleService _roleService = roleService;
 
-        [HttpGet("getroles")]
+        [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
 
@@ -27,13 +26,13 @@ namespace BaseWeb.Controllers.Identity
 
             if (!result.IsSuccess)
             {
-                return BadRequest("Error al obtener los roles.");
+                return BadRequest(result);
             }
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
-        [HttpPost("addrole")]
+        [HttpPost]
         public async Task<IActionResult> AddRole([FromBody] RoleDTO roleDTO)
         {
             if (!ModelState.IsValid)
@@ -45,13 +44,13 @@ namespace BaseWeb.Controllers.Identity
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
 
-            return Ok(result.Message);
+            return Ok(result);
         }
 
-        [HttpPut("updaterole")]
+        [HttpPut]
         public async Task<IActionResult> UpdateRole([FromBody] RoleViewModel roleViewModel)
         {
             if (!ModelState.IsValid)
@@ -63,23 +62,23 @@ namespace BaseWeb.Controllers.Identity
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
 
-            return Ok(result.Message);
+            return Ok(result);
         }
 
-        [HttpDelete("deleterole/{roleId}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteRole(string roleId)
         {
             var result = await _roleService.DeleteRoleAsync(roleId);
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
 
-            return Ok(result.Message);
+            return Ok(result);
         }
 
 
