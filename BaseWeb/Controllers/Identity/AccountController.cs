@@ -34,9 +34,16 @@ namespace BaseWeb.Controllers.Identity
 
                     if (!result.Succeeded) return BadRequest();
 
-                    string jwtToken = jWTService.GenerateToken(user);
+                    string jwt = jWTService.GenerateToken(user);
 
-                    return Ok(new { token = jwtToken});
+                    LoginResponse loginResponse = new LoginResponse()
+                    {
+                        Id = user.Id,
+                        Nombre ="",
+                        Token = jwt
+                    };
+
+                    return Ok(loginResponse);
                 }
                 return BadRequest("El usuario se encuentra eliminado.");
             }
