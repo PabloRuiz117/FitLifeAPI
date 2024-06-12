@@ -10,9 +10,9 @@ namespace BaseWeb.Controllers.Identity
     public class AccountController(
         SignInManager<ApplicationUser> signInManager,
         UserManager<ApplicationUser> userManager
-        ) : ControllerBase
+        ) : ControllerBase  
     {
-        [HttpPost("login")]
+        [HttpPost("login")] 
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             ApplicationUser user;
@@ -26,7 +26,7 @@ namespace BaseWeb.Controllers.Identity
                     var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                     if (!result.Succeeded) return BadRequest();
-
+                        
                     return Ok(user);
                 }
                 return BadRequest("El usuario se encuentra eliminado.");
