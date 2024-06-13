@@ -21,8 +21,11 @@ namespace Services.Services
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
+            var tokenExpiration = DateTime.UtcNow.AddDays(1);
+
             var securityToken = new JwtSecurityToken(
                 claims: claims,
+                expires: tokenExpiration,
                 signingCredentials: creds);
 
             string token = new JwtSecurityTokenHandler().WriteToken(securityToken);

@@ -14,7 +14,7 @@ namespace Services.Services.Identity
     {
         public async Task<ResponseHelper> AddApplicationUserAsync(ApplicationUserDTO applicationUserDTO)
         {
-           ResponseHelper response = new();
+            ResponseHelper response = new();
             try
             {
                 ApplicationUser applicationUser = new()
@@ -34,11 +34,11 @@ namespace Services.Services.Identity
                 else
                 {
                     response.Message = ApplicationUserMessages.ErrorAdded;
-                   
+
                     var duplicateUserError = result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName");
                     if (duplicateUserError != null)
                     {
-                      
+
                         response.IsSuccess = false;
                         response.Message = ApplicationUserMessages.DuplicateUserNameError;
                     }

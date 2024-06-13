@@ -36,10 +36,10 @@ namespace BaseWeb.Controllers.Identity
 
                     string jwt = jWTService.GenerateToken(user);
 
-                    LoginResponse loginResponse = new LoginResponse()
+                    LoginResponse loginResponse = new()
                     {
                         Id = user.Id,
-                        Nombre ="",
+                        Nombre = "",
                         Token = jwt
                     };
 
