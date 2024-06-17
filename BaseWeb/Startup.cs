@@ -32,8 +32,12 @@ namespace BaseWeb
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IJWTService, JWTService>();
-
-
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IServiceCollection services)
@@ -50,6 +54,8 @@ namespace BaseWeb
 
                 seed.EnsureSeed().GetAwaiter().GetResult();
             }
+
+            app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
 
