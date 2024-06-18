@@ -39,5 +39,19 @@ namespace Common.Enums
             [Display(Name = "Ha ocurrido un error")]
             ERROR,
         }
+
+        public enum DietType
+        {
+            [Display(Name = "Keto")]
+            Keto,
+            [Display(Name = "Vegetariano")]
+            Vegetarian,
+            [Display(Name = "Vegano")]
+            Vegan,
+            [Display(Name = "Paleo")]
+            Paleo,
+            [Display(Name = "Otro")]
+            Other
+        }
     }
 }
