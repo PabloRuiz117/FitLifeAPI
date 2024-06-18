@@ -23,7 +23,6 @@ namespace Services.Services.Identity
             {
                 ApplicationUser applicationUser = new()
                 {
-                    
                     Email = applicationUserDTO.Email,
                     UserName = applicationUserDTO.UserName
                 };
@@ -35,18 +34,15 @@ namespace Services.Services.Identity
                     LoginResponse loginResponse = new()
                     {
                         Id = applicationUser.Id,
-                        Nombre = applicationUser.UserName,
+                        UserName = applicationUser.UserName,
                         Token = jWTService.GenerateToken(applicationUser)
-                };
+                    };
 
-                    response.IsSuccess = true;
                     response.Data = loginResponse;
 
-
-
-
                     response.Message = ApplicationUserMessages.SuccessfullyAdded;
-                    return response;   
+                    
+                    return response;
                 }
 
                 else
@@ -54,6 +50,7 @@ namespace Services.Services.Identity
                     response.Message = ApplicationUserMessages.ErrorAdded;
 
                     var duplicateUserError = result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName");
+
                     if (duplicateUserError != null)
                     {
 
