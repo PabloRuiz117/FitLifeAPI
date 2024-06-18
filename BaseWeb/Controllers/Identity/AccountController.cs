@@ -1,4 +1,5 @@
-﻿using Domain.Identity;
+﻿using Common.Utils;
+using Domain.Identity;
 using Domain.Identity.DTOS;
 using Domain.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -18,11 +19,12 @@ namespace BaseWeb.Controllers.Identity
         ) : ControllerBase
     {
 
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             ApplicationUser user;
+
+            ResponseHelper response = new();
 
             user = await userManager.FindByEmailAsync(model.Email);
 
@@ -39,16 +41,24 @@ namespace BaseWeb.Controllers.Identity
                     LoginResponse loginResponse = new()
                     {
                         Id = user.Id,
-                        Nombre = "",
+                        UserName = user.UserName,
                         Token = jwt
                     };
 
-                    return Ok(loginResponse);
+                    response.IsSuccess = true;
+
+                    response.Data = loginResponse;
+
+                    return Ok(response);
                 }
-                return BadRequest("El usuario se encuentra eliminado.");
+
+                response.Message = "El usuario se encuentra eliminado.";
+                return BadRequest(response);
             }
 
-            return BadRequest("El email o contraseña no es valido.");
+            response.Message = "El email o contraseña no es valido.";
+
+            return BadRequest(response);
         }
 
         [HttpPost("register")]
@@ -60,6 +70,7 @@ namespace BaseWeb.Controllers.Identity
             }
 
             var response = await applicationUserService.AddApplicationUserAsync(applicationUserDTO);
+
             if (response.IsSuccess)
             {
                 return Ok(response);
