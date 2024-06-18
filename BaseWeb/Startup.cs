@@ -32,6 +32,7 @@ namespace BaseWeb
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<IRoutineService, RoutineService>();
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()

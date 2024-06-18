@@ -38,10 +38,12 @@ namespace Services.Services.Identity
                         Token = jWTService.GenerateToken(applicationUser)
                     };
 
+                    response.IsSuccess = true;
+
                     response.Data = loginResponse;
 
                     response.Message = ApplicationUserMessages.SuccessfullyAdded;
-                    
+
                     return response;
                 }
 
