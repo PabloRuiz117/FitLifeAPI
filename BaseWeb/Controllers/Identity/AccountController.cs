@@ -9,7 +9,7 @@ using Services.IServices.Identity;
 
 namespace BaseWeb.Controllers.Identity
 {
-    [Route("api/account")]
+    [Route("api/auth")]
     [ApiController]
     public class AccountController(
         SignInManager<ApplicationUser> signInManager,
