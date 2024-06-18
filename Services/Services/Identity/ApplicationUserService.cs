@@ -2,16 +2,20 @@
 using Common.Utils;
 using Domain.Identity;
 using Domain.Identity.DTOS;
+using Domain.Identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Services.IServices;
 using Services.IServices.Identity;
 
 namespace Services.Services.Identity
 {
     public class ApplicationUserService(
         UserManager<ApplicationUser> userManager,
-        ILogger<ApplicationUserService> logger) : IApplicationUserService
+        ILogger<ApplicationUserService> logger,
+        IJWTService jWTService) : IApplicationUserService
     {
+        //registro de usuario 
         public async Task<ResponseHelper> AddApplicationUserAsync(ApplicationUserDTO applicationUserDTO)
         {
             ResponseHelper response = new();
@@ -19,18 +23,32 @@ namespace Services.Services.Identity
             {
                 ApplicationUser applicationUser = new()
                 {
+                    
                     Email = applicationUserDTO.Email,
-                    UserName = applicationUserDTO.Email
+                    UserName = applicationUserDTO.UserName
                 };
 
                 var result = await userManager.CreateAsync(applicationUser, applicationUserDTO.Password);
 
                 if (result.Succeeded)
                 {
+                    LoginResponse loginResponse = new()
+                    {
+                        Id = applicationUser.Id,
+                        Nombre = applicationUser.UserName,
+                        Token = jWTService.GenerateToken(applicationUser)
+                };
+
                     response.IsSuccess = true;
+                    response.Data = loginResponse;
+
+
+
+
                     response.Message = ApplicationUserMessages.SuccessfullyAdded;
-                    return response;
+                    return response;   
                 }
+
                 else
                 {
                     response.Message = ApplicationUserMessages.ErrorAdded;
