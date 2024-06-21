@@ -1,5 +1,6 @@
 ﻿using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using Repository.Context;
 using Services.IServices;
 using Services.IServices.Identity;
@@ -33,12 +34,13 @@ namespace BaseWeb
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<IRoutineService, RoutineService>();
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+                options.AddPolicy("AllowAny", policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IServiceCollection services)
@@ -56,13 +58,15 @@ namespace BaseWeb
                 seed.EnsureSeed().GetAwaiter().GetResult();
             }
 
-            app.UseCors("MyPolicy");
-
-            app.UseHttpsRedirection();
+            app.UseCors("AllowAny");
 
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseHttpsRedirection();
         }
     }
 }
